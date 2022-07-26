@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+option go_package = "github.com/mikew79/port-domain-service/proto";
+
+package proto;
+
+// Ports Domain Service Exported by the server
+service PortsDomain {
+    // Get One Port
+    rpc GetPort(Port) returns (Port) {}                             
+    // Create a Port in the Data source
+    rpc CreatePort (Port) returns (UpdateResponse) {}
+    // Update the details of an existing Port
+    rpc UpdatePort (Port) returns (UpdateResponse) {}
+    // Delete a port from the data source
+    rpc DeletePort(Port) returns (UpdateResponse) {}
+    // Return a stream of Ports from the data source
+    rpc ListPorts(ListRequest) returns (stream Port) {}
+    // Create or update ports from a stream provided by the client
+    rpc CreateUpdatePorts (stream Port) returns (UpdateResponse) {}
+}
+
+// A Port object
+message Port {
+    string id = 1;
+    string name = 2;
+    string city = 3;
+    string country = 4;
+    repeated string alias = 5;
+    repeated string regions = 6;
+    repeated double coordinates = 7;
+    string province = 8;
+    string timezone = 9;
+    repeated string unlocs = 10;
+    string code = 11;
+}
+
+// Used to return an empty response
+message Empty {}
+
+// Returned by the streaming create and update
+message UpdateResponse {
+    int32 count = 1;
+}
+
+// Passed as an argument to the streaming list method
+message ListRequest {
+    int32 count = 1;
+}
