@@ -88,6 +88,8 @@ func (c *portsDomainClient) ListPorts(count int32) error {
 }
 
 func (c *portsDomainClient) CreateFromJson(jsonFile string) error {
+	fmt.Println("Hello")
+	fmt.Println(jsonFile)
 	if _, err := os.Stat(jsonFile); err != nil {
 		return err // file does not exist
 	}

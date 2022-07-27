@@ -127,8 +127,13 @@ func (s *portDomainServer) CreateUpdatePorts(stream pb.PortsDomain_CreateUpdateP
 	}
 }
 
-func (s *portDomainServer) ListPorts(rect *pb.ListRequest, stream pb.PortsDomain_ListPortsServer) error {
+func (s *portDomainServer) ListPorts(req *pb.ListRequest, stream pb.PortsDomain_ListPortsServer) error {
 	collection := s.db.Collection("ports")
+	opts := options.Find()
+	if req.Count > 0 {
+		opts.SetLimit(int64(req.Count))
+	}
+
 	results, err := collection.Find(context.TODO(), bson.D{{}})
 	if err != nil {
 		log.Fatal(err)

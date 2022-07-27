@@ -125,11 +125,10 @@ func main() {
 			fmt.Println(err)
 		}
 	} else if bulkAdd {
+		fmt.Println("Hello1")
 		err := apiClient.CreateFromJson(jsonFile)
 		if err != nil {
 			fmt.Println(err)
 		}
 	}
 }
-
-var portName string

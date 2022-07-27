@@ -22,7 +22,7 @@ func main() {
 	var config Configuration
 
 	// Command line arguments for configuring the service
-	flag.StringVar(&config.mongoUri, "mongouri", "mongodb://localhost:27017", "The URI of the mongodb databse server")
+	flag.StringVar(&config.mongoUri, "mongouri", "mongodb://mongodb:27017", "The URI of the mongodb databse server")
 	flag.StringVar(&config.dbName, "dbname", "domainPortsDb", "The name to use for the mongodb Database, a new one will be created if it does not exist")
 	flag.IntVar(&config.portNumber, "port", 7000, "The Port number to host the gRPC service on")
 	flag.Parse()
