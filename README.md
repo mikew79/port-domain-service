@@ -10,19 +10,22 @@ A sample client is then provided to allow you to test the microservice, from the
 ## Getting Started
 ___
 
+## Makefile
+The makefile contains scripts to test, and deploy the Ports Domain service, for more details run `make help` to list all options available
+
 ## Docker Compose
 
 Docker Compose is the easiest way of starting the micorservice and a database.
 
 * First build the protocol buffer definitions, by running `make protos` in the root of the repository
-* Then run the two docker contains using `docker-compose up --detatch` in the root of the repository
+* Then run the two docker containers using `docker-compose up --detatch` in the root of the repository
 
 
 ## Using the client
 
-The sample client is provided in the `/sampleClient` folder rof the repository.
+The sample client is provided in the `/cmd/sampleClient` folder rof the repository.
 
-This can be run using `go run main.go` from the client folder.
+This can be run using `go run /cmd/sampleClient/main.go` from the client folder.
 
 There are a number of command line arguments avialbe for the client
 
