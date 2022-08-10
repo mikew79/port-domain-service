@@ -20,7 +20,7 @@ func main() {
 	var bulkAdd bool = false
 	var portNumber int = 7000
 
-	var portId = ""
+	var portID = ""
 
 	var portName string = ""
 	var portCity string = ""
@@ -43,12 +43,12 @@ func main() {
 	flag.BoolVar(&listPorts, "list", false, "list all ports ")
 	flag.BoolVar(&bulkAdd, "stream", false, "bulk create or update porst from json file")
 
-	flag.IntVar(&portNumber, "port", 7000, "The Port number of the hosted gRPC service")
+	flag.IntVar(&portNumber, "port", 7001, "The Port number of the hosted gRPC service")
 	flag.IntVar(&listCount, "count", 0, "The number of ports to list")
 
 	flag.StringVar(&jsonFile, "file", "", "The JSON file with the ports data to stream")
 
-	flag.StringVar(&portId, "id", "", "The ID of the port to transact with")
+	flag.StringVar(&portID, "id", "", "The ID of the port to transact with")
 
 	flag.StringVar(&portName, "name", "", "The name of the port object")
 	flag.StringVar(&portCity, "city", "", "The city for this port object")
@@ -63,7 +63,7 @@ func main() {
 
 	flag.Parse()
 
-	if (getPort || deletePort || updatePort) && portId == "" {
+	if (getPort || deletePort || updatePort) && portID == "" {
 		fmt.Println("Argument -id must be specified for get and delete requests")
 		return
 	}
@@ -94,27 +94,27 @@ func main() {
 	apiClient := api.NewPortDomainClient(conn)
 
 	if getPort {
-		result, err := apiClient.GetPort(portId)
+		result, err := apiClient.GetPort(portID)
 		if err != nil {
 			fmt.Println(err)
 		}
 		fmt.Println(result)
 
 	} else if createPort {
-		result, err := apiClient.CreatePort(portId, portName, portCity, portCountry, portAliasSlice, portRegionSlice, portCoordsSlice, portProvince, portTimezone, portUnlocsSlice, portCode)
+		result, err := apiClient.CreatePort(portID, portName, portCity, portCountry, portAliasSlice, portRegionSlice, portCoordsSlice, portProvince, portTimezone, portUnlocsSlice, portCode)
 		if err != nil {
 			fmt.Println(err)
 		}
 		fmt.Println(result)
 
 	} else if updatePort {
-		result, err := apiClient.UpdatePort(portId, portName, portCity, portCountry, portAliasSlice, portRegionSlice, portCoordsSlice, portProvince, portTimezone, portUnlocsSlice, portCode)
+		result, err := apiClient.UpdatePort(portID, portName, portCity, portCountry, portAliasSlice, portRegionSlice, portCoordsSlice, portProvince, portTimezone, portUnlocsSlice, portCode)
 		if err != nil {
 			fmt.Println(err)
 		}
 		fmt.Println(result)
 	} else if deletePort {
-		result, err := apiClient.DeletePort(portId)
+		result, err := apiClient.DeletePort(portID)
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -126,7 +126,7 @@ func main() {
 		}
 	} else if bulkAdd {
 		fmt.Println("Hello1")
-		err := apiClient.CreateFromJson(jsonFile)
+		err := apiClient.CreateFromJSON(jsonFile)
 		if err != nil {
 			fmt.Println(err)
 		}

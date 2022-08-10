@@ -13,15 +13,18 @@ import (
 	pb "github.com/mikew79/port-domain-service/proto"
 )
 
-type portsDomainClient struct {
+// PortsDomainClient - A Sample Ports Domain API client to demostrate use
+type PortsDomainClient struct {
 	client pb.PortsDomainClient
 }
 
-func NewPortDomainClient(conn *grpc.ClientConn) *portsDomainClient {
-	return &portsDomainClient{client: pb.NewPortsDomainClient(conn)}
+// NewPortDomainClient - Create a new sample client
+func NewPortDomainClient(conn *grpc.ClientConn) *PortsDomainClient {
+	return &PortsDomainClient{client: pb.NewPortsDomainClient(conn)}
 }
 
-func (c *portsDomainClient) CreatePort(id string, name string, city string, country string, alias []string, region []string, coordinates []float64, province string, timezone string, unlocs []string, code string) (string, error) {
+// CreatePort - Will make a gRPC call to create a port in the service
+func (c *PortsDomainClient) CreatePort(id string, name string, city string, country string, alias []string, region []string, coordinates []float64, province string, timezone string, unlocs []string, code string) (string, error) {
 	port := pb.Port{Id: id, Name: name, City: city, Country: country, Alias: alias, Regions: region, Coordinates: coordinates, Province: province, Timezone: timezone, Unlocs: unlocs, Code: code}
 
 	response, err := c.client.CreatePort(context.Background(), &port)
@@ -33,7 +36,8 @@ func (c *portsDomainClient) CreatePort(id string, name string, city string, coun
 	return fmt.Sprintf("Response from server: %d\n", response.Count), nil
 }
 
-func (c *portsDomainClient) UpdatePort(id string, name string, city string, country string, alias []string, region []string, coordinates []float64, province string, timezone string, unlocs []string, code string) (string, error) {
+// UpdatePort - Will make a gRPC call to
+func (c *PortsDomainClient) UpdatePort(id string, name string, city string, country string, alias []string, region []string, coordinates []float64, province string, timezone string, unlocs []string, code string) (string, error) {
 	port := pb.Port{Id: id, Name: name, City: city, Country: country, Alias: alias, Regions: region, Coordinates: coordinates, Province: province, Timezone: timezone, Unlocs: unlocs, Code: code}
 
 	response, err := c.client.UpdatePort(context.Background(), &port)
@@ -44,7 +48,8 @@ func (c *portsDomainClient) UpdatePort(id string, name string, city string, coun
 	return fmt.Sprintf("Response from server: %d\n", response.Count), nil
 }
 
-func (c *portsDomainClient) GetPort(id string) (string, error) {
+// GetPort - Will make a gRPC call to retreive one port from the server
+func (c *PortsDomainClient) GetPort(id string) (string, error) {
 	port := pb.Port{Id: id}
 
 	response, err := c.client.GetPort(context.Background(), &port)
@@ -55,7 +60,8 @@ func (c *portsDomainClient) GetPort(id string) (string, error) {
 	return fmt.Sprintf("Response from server: %v\n", response), nil
 }
 
-func (c *portsDomainClient) DeletePort(id string) (string, error) {
+// DeletePort - Will make a gRPC call to delete a port in the server datastore
+func (c *PortsDomainClient) DeletePort(id string) (string, error) {
 	port := pb.Port{Id: id}
 	response, err := c.client.DeletePort(context.Background(), &port)
 	if err != nil {
@@ -66,7 +72,8 @@ func (c *portsDomainClient) DeletePort(id string) (string, error) {
 	return resp, nil
 }
 
-func (c *portsDomainClient) ListPorts(count int32) error {
+// ListPorts - Will make a gRPC call to list a numebr of ports in the gRPC server datastore
+func (c *PortsDomainClient) ListPorts(count int32) error {
 	stream, err := c.client.ListPorts(context.Background(), &pb.ListRequest{Count: count})
 	if err != nil {
 		fmt.Printf("Error when calling ListPorts: %s\n", err)
@@ -87,7 +94,8 @@ func (c *portsDomainClient) ListPorts(count int32) error {
 	return nil
 }
 
-func (c *portsDomainClient) CreateFromJson(jsonFile string) error {
+// CreateFromJSON - Will make a gRPC call to send a stream of ports to be created in the gRPC datastore
+func (c *PortsDomainClient) CreateFromJSON(jsonFile string) error {
 	fmt.Println("Hello")
 	fmt.Println(jsonFile)
 	if _, err := os.Stat(jsonFile); err != nil {
